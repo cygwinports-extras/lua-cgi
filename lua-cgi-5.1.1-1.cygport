@@ -1,0 +1,16 @@
+inherit lua
+
+DESCRIPTION="Lua web scripting library"
+HOMEPAGE="http://www.keplerproject.org/cgilua/"
+SRC_URI="http://luaforge.net/frs/download.php/2716/cgilua-${PV}.tar.gz"
+PATCH_URI="sapi.patch"
+SRC_DIR="cgilua-${PV}"
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}
+	cyginstall PREFIX=${D}/usr
+
+	cp -r src/sapi ${D}${LUA_SCRIPTDIR}
+}

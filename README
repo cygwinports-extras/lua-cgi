@@ -1,0 +1,63 @@
+lua-cgi
+------------------------------------------
+CGILua is a tool for creating dynamic Web pages and manipulating input 
+data from Web forms. CGILua allows the separation of logic and data 
+handling from the generation of pages, making it easy to develop web 
+applications with Lua.
+
+Runtime requirements:
+  lua-5.1.3-1
+
+Build requirements:
+  cygport-0.3.8-1
+  make-3.81-1
+
+Canonical website:
+  http://www.keplerproject.org/cgilua/
+
+Canonical download:
+  http://luaforge.net/projects/cgilua/
+
+-------------------------------------------
+
+Build instructions:
+  unpack lua-cgi-5.1.1-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+	 unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./lua-cgi-5.1.1-X.cygport all
+
+This will create:
+  /usr/src/lua-cgi-5.1.1-X-src.tar.bz2
+  /usr/src/lua-cgi-5.1.1-X.tar.bz2
+
+-------------------------------------------
+
+Files included in the binary package:
+
+  /usr/share/doc/lua-cgi-5.1.1/README
+  /usr/share/lua/5.1/cgilua.lua
+  /usr/share/lua/5.1/cgilua/cookies.lua
+  /usr/share/lua/5.1/cgilua/dispatcher.lua
+  /usr/share/lua/5.1/cgilua/lp.lua
+  /usr/share/lua/5.1/cgilua/mime.lua
+  /usr/share/lua/5.1/cgilua/post.lua
+  /usr/share/lua/5.1/cgilua/readuntil.lua
+  /usr/share/lua/5.1/cgilua/serialize.lua
+  /usr/share/lua/5.1/cgilua/session.lua
+  /usr/share/lua/5.1/cgilua/urlcode.lua
+  /usr/share/lua/5.1/sapi/cgi/info.lua
+  /usr/share/lua/5.1/sapi/cgi/request.lua
+  /usr/share/lua/5.1/sapi/cgi/response.lua
+  /usr/share/lua/5.1/sapi/init.lua
+
+------------------
+
+Port Notes:
+
+----- version 5.1.1-1 -----
+Initial release for Cygwin.
+
+
+Cygwin port maintained by:
+http://cygwinports.dotsrc.org/

@@ -1,0 +1,7 @@
+category: Lua Web
+requires: lua
+sdesc: "Lua web scripting library"
+ldesc: "CGILua is a tool for creating dynamic Web pages and manipulating 
+input data from Web forms. CGILua allows the separation of logic and 
+data handling from the generation of pages, making it easy to develop 
+web applications with Lua."

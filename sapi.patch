@@ -1,0 +1,99 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## sapi.dpatch by Enrico Tassi <gareuselesinge@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad src/sapi/cgi/info.lua src/sapi/cgi/info.lua
+--- src/sapi/cgi/info.lua	1970-01-01 01:00:00.000000000 +0100
++++ src/sapi/cgi/info.lua	2007-12-01 17:19:41.000000000 +0100
+@@ -0,0 +1,16 @@
++----------------------------------------------------------------------------
++-- $Id: sapi.patch,v 1.1 2008-02-14 05:47:29 yselkowitz Exp $
++----------------------------------------------------------------------------
++
++module"sapi.cgi.info"
++
++function open (req)
++	return {
++		_COPYRIGHT = "Copyright (C) 2004-2007 Kepler Project",
++		_DESCRIPTION = "CGI SAPI implementation",
++		_VERSION = "CGI SAPI 1.0",
++		ispersistent = false,
++		ismapped = false,
++		isdirect = false,
++	}
++end
+diff -urNad src/sapi/cgi/request.lua src/sapi/cgi/request.lua
+--- src/sapi/cgi/request.lua	1970-01-01 01:00:00.000000000 +0100
++++ src/sapi/cgi/request.lua	2007-12-01 17:19:41.000000000 +0100
+@@ -0,0 +1,18 @@
++----------------------------------------------------------------------------
++-- $Id: sapi.patch,v 1.1 2008-02-14 05:47:29 yselkowitz Exp $
++----------------------------------------------------------------------------
++
++local getenv = os.getenv
++local stdin = io.stdin
++
++module"sapi.cgi.request"
++
++----------------------------------------------------------------------------
++function open (req)
++	return {
++		servervariable = getenv,
++		getpostdata = function (n)
++			return stdin:read (n)
++		end,
++	}
++end
+diff -urNad src/sapi/cgi/response.lua src/sapi/cgi/response.lua
+--- src/sapi/cgi/response.lua	1970-01-01 01:00:00.000000000 +0100
++++ src/sapi/cgi/response.lua	2007-12-01 17:19:41.000000000 +0100
+@@ -0,0 +1,34 @@
++----------------------------------------------------------------------------
++-- $Id: sapi.patch,v 1.1 2008-02-14 05:47:29 yselkowitz Exp $
++----------------------------------------------------------------------------
++
++local unpack = unpack
++local format = string.format
++local stderr, stdout = io.stderr, io.stdout
++
++module"sapi.cgi.response"
++
++----------------------------------------------------------------------------
++function open (req)
++	return {
++		contenttype = function (header)
++			stdout:write ("Content-type: "..header.."\n\n")
++		end,
++
++		errorlog = function (msg, errlevel)
++			stderr:write (msg)
++		end,
++
++		header = function (header, value)
++			stdout:write (format ("%s: %s\n", header, value))
++		end,
++
++		redirect = function (url)
++			stdout:write ("Location: "..url.."\n\n")
++		end,
++
++		write = function (...)
++			stdout:write (...)
++		end,
++	}
++end
+diff -urNad src/sapi/init.lua src/sapi/init.lua
+--- src/sapi/init.lua	1970-01-01 01:00:00.000000000 +0100
++++ src/sapi/init.lua	2007-12-01 17:20:38.000000000 +0100
+@@ -0,0 +1,8 @@
++local info = require"sapi.cgi.info"
++local req = require"sapi.cgi.request"
++local res = require"sapi.cgi.response"
++SAPI = {
++	Info = info.open (),
++	Request = req.open (),
++	Response = res.open (),
++}
